@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import "./styles.css";
+import explorer from "./data/data";
+import { useState } from "react";
+import Folder from "./components/Folder";
+import traversehook from "./hooks/traversehook";
 
-function App() {
+export default function App() {
+  const [explorerData, setExplorerData] = useState(explorer);
+  const { insert } = traversehook();
+  const handleData = (folderid, item, isFolder) => {
+    const node = insert(explorerData, folderid, item, isFolder);
+    setExplorerData(node);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Folder explorer={explorerData} handleData={handleData} />
     </div>
   );
 }
-
-export default App;
